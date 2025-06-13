@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hubertus Monachus | Tech Services</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#00f0ff',
+                        secondary: '#ff00e4',
+                        dark: '#0f172a',
+                        darker: '#020617'
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'float': 'float 6s ease-in-out infinite',
+                        'gradient-x': 'gradient-x 8s ease infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        },
+                        'gradient-x': {
+                            '0%, 100%': {
+                                'background-size': '200% 200%',
+                                'background-position': 'left center'
+                            },
+                            '50%': {
+                                'background-size': '200% 200%',
+                                'background-position': 'right center'
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background-color: #020617;
+            color: #e2e8f0;
+            scroll-behavior: smooth;
+        }
+        
+        .gradient-text {
+            background-image: linear-gradient(90deg, #00f0ff, #ff00e4);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .gradient-border {
+            position: relative;
+            border-radius: 0.5rem;
+        }
+        
+        .gradient-border::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 0.5rem;
+            padding: 2px;
+            background: linear-gradient(45deg, #00f0ff, #ff00e4);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 25px -5px rgba(0, 240, 255, 0.1), 0 10px 10px -5px rgba(255, 0, 228, 0.04);
+        }
+        
+        .testimonial-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 240, 255, 0.1), 0 4px 6px -2px rgba(255, 0, 228, 0.05);
+        }
+        
+        input, textarea {
+            background-color: rgba(15, 23, 42, 0.7);
+            transition: all 0.3s ease;
+        }
+        
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: #00f0ff;
+            box-shadow: 0 0 0 3px rgba(0, 240, 255, 0.2);
+        }
+        
+        .nav-link {
+            position: relative;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background: linear-gradient(90deg, #00f0ff, #ff00e4);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        @keyframes glitch {
+            0% { transform: translate(0); }
+            20% { transform: translate(-2px, 2px); }
+            40% { transform: translate(-2px, -2px); }
+            60% { transform: translate(2px, 2px); }
+            80% { transform: translate(2px, -2px); }
+            100% { transform: translate(0); }
+        }
+        
+        .glitch-effect {
+            animation: glitch 1s linear infinite;
+        }
+        
+        .glitch-effect:hover {
+            animation: none;
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 bg-darker bg-opacity-90 backdrop-filter backdrop-blur-lg border-b border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center">
+                        <span class="text-2xl font-bold gradient-text">Hubertus Monachus</span>
+                    </div>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-center space-x-8">
+                        <a href="#home" class="nav-link text-gray-300 hover:text-white px-3 py-2 text-sm font-medium">Home</a>
+                        <a href="#services" class="nav-link text-gray-300 hover:text-white px-3 py-2 text-sm font-medium">Services</a>
+                        <a href="#testimonials" class="nav-link text-gray-300 hover:text-white px-3 py-2 text-sm font-medium">Testimonials</a>
+                        <a href="#contact" class="nav-link text-gray-300 hover:text-white px-3 py-2 text-sm font-medium">Contact</a>
+                    </div>
+                </div>
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none">
+                        <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-darker border-t border-gray-800">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#home" class="block px-3 py-2 text-base font-medium text-gray-300 hover:text-white hover:bg-gray-800 rounded-md">Home</a>
+                <a href="#services" class="block px-3 py-2 text-base font-medium text-gray-300 hover:text-white hover:bg-gray-800 rounded-md">Services</a>
+                <a href="#testimonials" class="block px-3 py-2 text-base font-medium text-gray-300 hover:text-white hover:bg-gray-800 rounded-md">Testimonials</a>
+                <a href="#contact" class="block px-3 py-2 text-base font-medium text-gray-300 hover:text-white hover:bg-gray-800 rounded-md">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="pt-24 pb-16 md:pt-32 md:pb-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+            <div class="text-center md:text-left">
+                <h1 class="text-4xl md:text-6xl font-bold mb-6 leading-tight">
+                    <span class="gradient-text glitch-effect">Mastering Tech,</span><br>
+                    <span class="text-white">Empowering You</span>
+                </h1>
+                <p class="text-lg md:text-xl text-gray-400 mb-8 max-w-lg mx-auto md:mx-0">
+                    Cutting-edge tech solutions tailored to your needs. From web development to device repairs, I bring hacker-level expertise to solve your digital challenges.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+                    <a href="#contact" class="px-8 py-3 bg-gradient-to-r from-primary to-secondary text-white font-medium rounded-lg hover:opacity-90 transition-all transform hover:scale-105 shadow-lg shadow-primary/20">
+                        Request Service
+                    </a>
+                    <a href="#services" class="px-8 py-3 border border-gray-700 text-white font-medium rounded-lg hover:bg-gray-800 transition-all transform hover:scale-105">
+                        Explore Services
+                    </a>
+                </div>
+            </div>
+            <div class="relative flex justify-center">
+                <div class="absolute inset-0 bg-gradient-to-br from-primary/20 to-secondary/20 rounded-full filter blur-3xl opacity-70 animate-gradient-x"></div>
+                <lottie-player src="https://assets9.lottiefiles.com/packages/lf20_iv4isx3q.json" background="transparent" speed="1" style="width: 100%; height: auto;" loop autoplay class="relative z-10"></lottie-player>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl md:text-4xl font-bold mb-4">
+                <span class="gradient-text">Tech Services</span> That Elevate Your Digital Life
+            </h2>
+            <p class="text-lg text-gray-400 max-w-2xl mx-auto">
+                Comprehensive solutions designed to enhance your digital presence and keep your devices running smoothly.
+            </p>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Service 1 -->
+            <div class="service-card gradient-border p-6 bg-gray-900 rounded-lg transition-all duration-300 hover:border-primary">
+                <div class="flex items-center mb-4">
+                    <div class="p-3 rounded-full bg-gradient-to-br from-primary/20 to-secondary/20 mr-4">
+                        <i class="fas fa-code text-2xl gradient-text"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white">Web Design & Development</h3>
+                </div>
+                <p class="text-gray-400 mb-4">
+                    Custom, responsive websites built with modern technologies to showcase your brand and drive engagement.
+                </p>
+                <ul class="space-y-2 mb-6">
+                    <li class="flex items-center text-gray-300">
+                        <i class="fas fa-check-circle text-primary mr-2"></i>
+                        Responsive design for all devices
+                    </li>
+                    <li class="flex items-center text-gray-300">
+                        <i class="fas fa-check-circle text-primary mr-2"></i>
+                        SEO optimization
+                    </li>
+                    <li class="flex items-center text-gray-300">
+                        <i class="fas fa-check-circle text-primary mr-2"></i>
+                        Custom functionality
+                    </li>
+                </ul>
+                <a href="#contact" class="inline-flex items-center text-primary hover:text-primary/80 font-medium">
+                    Get Started <i class="fas fa-arrow-right ml-2"></i>
+                </a>
+            </div>
+            
+            <!-- Service 2 -->
+            <div class="service-card gradient-border p-6 bg-gray-900 rounded-lg transition-all duration-300 hover:border-primary">
+                <div class="flex items-center mb-4">
+                    <div class="p-3 rounded-full bg-gradient-to-br from-primary/20 to-secondary/20 mr-4">
+                        <i class="fas fa-file-alt text-2xl gradient-text"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white">CV & Cover Letter Enhancement</h3>
+                </div>
+                <p class="text-gray-400 mb-4">
+                    Professionally crafted resumes and cover letters that highlight your strengths and get you noticed by employers.
+                </p>
+                <ul class="space-y-2 mb-6">
+                    <li class="flex items-center text-gray-300">
+                        <i class="fas fa-check-circle text-primary mr-2"></i>
+                        ATS-friendly formatting
+                    </li>
+                    <li class="flex items-center text-gray-300">
+                        <i class="fas fa-check-circle text-primary mr-2"></i>
+                        Keyword optimization
+                    </li>
+                    <li class="flex items-center text-gray-300">
+                        <i class="fas fa-check-circle text-primary mr-2"></i>
+                        Professional design
+                    </li>
+                </ul>
+                <a href="#contact" class="inline-flex items-center text-primary hover:text-primary/80 font-medium">
+                    Get Started <i class="fas fa-arrow-right ml-2"></i>
+                </a>
+            </div>
+            
+            <!-- Service 3 -->
+            <div class="service-card gradient-border p-6 bg-gray-900 rounded-lg transition-all duration-300 hover:border-primary">
+                <div class="flex items-center mb-4">
+                    <div class="p-3 rounded-full bg-gradient-to-br from-primary/20 to-secondary/20 mr-4">
+                        <i class="fas fa-laptop text-2xl gradient-text"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white">Computer Software Installation</h3>
+                </div>
+                <p class="text-gray-400 mb-4">
+                    Expert installation and configuration of operating systems and software to keep your computer running optimally.
+                </p>
+                <ul class="space-y-2 mb-6">
+                    <li class="flex items-center text-gray-300">
+                        <i class="fas fa-check-circle text-primary mr-2"></i>
+                        Windows upgrades
+                    </li>
+                    <li class="flex items-center text-gray-300">
+                        <i class="fas fa-check-circle text-primary mr-2"></i>
+                        Driver installations
+                    </li>
+                    <li class="flex items-center text-gray-300">
+                        <i class="fas fa-check-circle text-primary mr-2"></i>
+                        System optimization
+                    </li>
+                </ul>
+                <a href="#contact" class="inline-flex items-center text-primary hover:text-primary/80 font-medium">
+                    Get Started <i class="fas fa-arrow-right ml-2"></i>
+                </a>
+            </div>
+            
+            <!-- Service 4 -->
+            <div class="service-card gradient-border p-6 bg-gray-900 rounded-lg transition-all duration-300 hover:border-primary">
+                <div class="flex items-center mb-4">
+                    <div class="p-3 rounded-full bg-gradient-to-br from-primary/20 to-secondary/20 mr-4">
+                        <i class="fas fa-mobile-alt text-2xl gradient-text"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white">Phone Formatting & Tech Repairs</h3>
+                </div>
+                <p class="text-gray-400 mb-4">
+                    Professional phone services including formatting, troubleshooting, and minor repairs to extend your device's lifespan.
+                </p>
+                <ul class="space-y-2 mb-6">
+                    <li class="flex items-center text-gray-300">
+                        <i class="fas fa-check-circle text-primary mr-2"></i>
+                        Data backup & transfer
+                    </li>
+                    <li class="flex items-center text-gray-300">
+                        <i class="fas fa-check-circle text-primary mr-2"></i>
+                        Factory resets
+                    </li>
+                    <li class="flex items-center text-gray-300">
+                        <i class="fas fa-check-circle text-primary mr-2"></i>
+                        Performance tuning
+                    </li>
+                </ul>
+                <a href="#contact" class="inline-flex items-center text-primary hover:text-primary/80 font-medium">
+                    Get Started <i class="fas fa-arrow-right ml-2"></i>
+                </a>
+            </div>
+            
+            <!-- Service 5 -->
+            <div class="service-card gradient-border p-6 bg-gray-900 rounded-lg transition-all duration-300 hover:border-primary">
+                <div class="flex items-center mb-4">
+                    <div class="p-3 rounded-full bg-gradient-to-br from-primary/20 to-secondary/20 mr-4">
+                        <i class="fas fa-headset text-2xl gradient-text"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white">General Tech Support</h3>
+                </div>
+                <p class="text-gray-400 mb-4">
+                    Comprehensive technical assistance for all your digital needs, from troubleshooting to setup guidance.
+                </p>
+                <ul class="space-y-2 mb-6">
+                    <li class="flex items-center text-gray-300">
+                        <i class="fas fa-check-circle text-primary mr-2"></i>
+                        Remote assistance
+                    </li>
+                    <li class="flex items-center text-gray-300">
+                        <i class="fas fa-check-circle text-primary mr-2"></i>
+                        Software guidance
+                    </li>
+                    <li class="flex items-center text-gray-300">
+                        <i class="fas fa-check-circle text-primary mr-2"></i>
+                        Hardware advice
+                    </li>
+                </ul>
+                <a href="#contact" class="inline-flex items-center text-primary hover:text-primary/80 font-medium">
+                    Get Started <i class="fas fa-arrow-right ml-2"></i>
+                </a>
+            </div>
+            
+            <!-- Service 6 -->
+            <div class="service-card gradient-border p-6 bg-gray-900 rounded-lg transition-all duration-300 hover:border-primary">
+                <div class="flex items-center mb-4">
+                    <div class="p-3 rounded-full bg-gradient-to-br from-primary/20 to-secondary/20 mr-4">
+                        <i class="fas fa-cogs text-2xl gradient-text"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white">Custom Solutions</h3>
+                </div>
+                <p class="text-gray-400 mb-4">
+                    Tailored tech solutions designed specifically for your unique requirements and challenges.
+                </p>
+                <ul class="space-y-2 mb-6">
+                    <li class="flex items-center text-gray-300">
+                        <i class="fas fa-check-circle text-primary mr-2"></i>
+                        Personalized approach
+                    </li>
+                    <li class="flex items-center text-gray-300">
+                        <i class="fas fa-check-circle text-primary mr-2"></i>
+                        Problem-solving focus
+                    </li>
+                    <li class="flex items-center text-gray-300">
+                        <i class="fas fa-check-circle text-primary mr-2"></i>
+                        Ongoing support
+                    </li>
+                </ul>
+                <a href="#contact" class="inline-flex items-center text-primary hover:text-primary/80 font-medium">
+                    Get Started <i class="fas fa-arrow-right ml-2"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto bg-gradient-to-b from-gray-900 to-darker">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl md:text-4xl font-bold mb-4">
+                What Clients <span class="gradient-text">Say</span>
+            </h2>
+            <p class="text-lg text-gray-400 max-w-2xl mx-auto">
+                Don't just take our word for it. Here's what people who've used our services have to say.
+            </p>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Testimonial 1 -->
+            <div class="testimonial-card p-6 bg-gray-900 rounded-lg border border-gray-800 transition-all duration-300">
+                <div class="flex items-center mb-4">
+                    <div class="w-12 h-12 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-white font-bold mr-4">
+                        JD
+                    </div>
+                    <div>
+                        <h4 class="text-white font-medium">John D.</h4>
+                        <div class="flex text-yellow-400">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                </div>
+                <p class="text-gray-300 italic">
+                    "Hubertus completely transformed my outdated website into a modern, mobile-friendly masterpiece. The attention to detail and communication throughout the process was exceptional."
+                </p>
+            </div>
+            
+            <!-- Testimonial 2 -->
+            <div class="testimonial-card p-6 bg-gray-900 rounded-lg border border-gray-800 transition-all duration-300">
+                <div class="flex items-center mb-4">
+                    <div class="w-12 h-12 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-white font-bold mr-4">
+                        SM
+                    </div>
+                    <div>
+                        <h4 class="text-white font-medium">Sarah M.</h4>
+                        <div class="flex text-yellow-400">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                </div>
+                <p class="text-gray-300 italic">
+                    "After struggling with my resume for months, Hubertus helped craft a version that landed me three interviews in two weeks. The difference was night and day!"
+                </p>
+            </div>
+            
+            <!-- Testimonial 3 -->
+            <div class="testimonial-card p-6 bg-gray-900 rounded-lg border border-gray-800 transition-all duration-300">
+                <div class="flex items-center mb-4">
+                    <div class="w-12 h-12 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-white font-bold mr-4">
+                        RK
+                    </div>
+                    <div>
+                        <h4 class="text-white font-medium">Robert K.</h4>
+                        <div class="flex text-yellow-400">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                </div>
+                <p class="text-gray-300 italic">
+                    "My laptop was running painfully slow. Hubertus not only upgraded my OS but optimized everything. It now runs better than when it was new. Highly recommended!"
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div>
+                <h2 class="text-3xl md:text-4xl font-bold mb-6">
+                    <span class="gradient-text">Get In Touch</span>
+                </h2>
+                <p class="text-lg text-gray-400 mb-8">
+                    Ready to take your tech to the next level? Fill out the form or reach out directly. I typically respond within 24 hours.
+                </p>
+                
+                <div class="space-y-6">
+                    <div class="flex items-start">
+                        <div class="p-3 rounded-full bg-gradient-to-br from-primary/20 to-secondary/20 mr-4">
+                            <i class="fas fa-envelope text-xl gradient-text"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-white font-medium mb-1">Email</h4>
+                            <a href="mailto:niyohubert1@gmail.com" class="text-gray-400 hover:text-primary transition-colors">niyohubert1@gmail.com</a>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-start">
+                        <div class="p-3 rounded-full bg-gradient-to-br from-primary/20 to-secondary/20 mr-4">
+                            <i class="fas fa-phone-alt text-xl gradient-text"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-white font-medium mb-1">Phone</h4>
+                            <a href="tel:+250782665286" class="text-gray-400 hover:text-primary transition-colors">+2 (50) 78-266-5286</a>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-start">
+                        <div class="p-3 rounded-full bg-gradient-to-br from-primary/20 to-secondary/20 mr-4">
+                            <i class="fas fa-map-marker-alt text-xl gradient-text"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-white font-medium mb-1">Location</h4>
+                            <p class="text-gray-400">Remote services available worldwide</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="gradient-border p-6 bg-gray-900 rounded-lg">
+                <form id="contactForm" class="space-y-6">
+                    <div>
+                        <label for="name" class="block text-sm font-medium text-gray-300 mb-1">Full Name</label>
+                        <input type="text" id="name" name="name" required class="w-full px-4 py-3 rounded-lg border border-gray-700 focus:border-primary focus:ring-1 focus:ring-primary bg-gray-800 text-white placeholder-gray-500 transition-all">
+                    </div>
+                    
+                    <div>
+                        <label for="email" class="block text-sm font-medium text-gray-300 mb-1">Email Address</label>
+                        <input type="email" id="email" name="email" required class="w-full px-4 py-3 rounded-lg border border-gray-700 focus:border-primary focus:ring-1 focus:ring-primary bg-gray-800 text-white placeholder-gray-500 transition-all">
+                    </div>
+                    
+                    <div>
+                        <label for="service" class="block text-sm font-medium text-gray-300 mb-1">Service Needed</label>
+                        <select id="service" name="service" class="w-full px-4 py-3 rounded-lg border border-gray-700 focus:border-primary focus:ring-1 focus:ring-primary bg-gray-800 text-white placeholder-gray-500 transition-all">
+                            <option value="">Select a service</option>
+                            <option value="web">Web Design & Development</option>
+                            <option value="cv">CV & Cover Letter Enhancement</option>
+                            <option value="software">Computer Software Installation</option>
+                            <option value="phone">Phone Formatting & Tech Repairs</option>
+                            <option value="support">General Tech Support</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    
+                    <div>
+                        <label for="message" class="block text-sm font-medium text-gray-300 mb-1">Message</label>
+                        <textarea id="message" name="message" rows="4" required class="w-full px-4 py-3 rounded-lg border border-gray-700 focus:border-primary focus:ring-1 focus:ring-primary bg-gray-800 text-white placeholder-gray-500 transition-all"></textarea>
+                    </div>
+                    
+                    <button type="submit" class="w-full px-6 py-3 bg-gradient-to-r from-primary to-secondary text-white font-medium rounded-lg hover:opacity-90 transition-all transform hover:scale-[1.02] shadow-lg shadow-primary/20">
+                        Send Message
+                    </button>
+                </form>
+                
+                <div id="formSuccess" class="hidden mt-4 p-4 bg-green-900/50 border border-green-500 rounded-lg text-green-300">
+                    <i class="fas fa-check-circle mr-2"></i> Your message has been sent successfully! I'll get back to you soon.
+                </div>
+                
+                <div id="formError" class="hidden mt-4 p-4 bg-red-900/50 border border-red-500 rounded-lg text-red-300">
+                    <i class="fas fa-exclamation-circle mr-2"></i> There was an error sending your message. Please try again or contact me directly.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-12 px-4 sm:px-6 lg:px-8 bg-darker border-t border-gray-800">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-6 md:mb-0">
+                    <span class="text-2xl font-bold gradient-text">Hubertus Monachus</span>
+                    <p class="text-gray-400 mt-2">Mastering Tech, Empowering You</p>
+                </div>
+                
+                <div class="flex space-x-6">
+                    <a href="#" class="text-gray-400 hover:text-primary transition-colors">
+                        <i class="fab fa-twitter text-xl"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-primary transition-colors">
+                        <i class="fab fa-github text-xl"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-primary transition-colors">
+                        <i class="fab fa-linkedin-in text-xl"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-primary transition-colors">
+                        <i class="fab fa-instagram text-xl"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-500 text-sm mb-4 md:mb-0">
+                    &copy; 2025 Hubertus Monachus. All rights reserved.
+                </p>
+                
+                <div class="flex space-x-6">
+                    <a href="#" class="text-gray-400 hover:text-white text-sm transition-colors">Privacy Policy</a>
+                    <a href="#" class="text-gray-400 hover:text-white text-sm transition-colors">Terms of Service</a>
+                    <a href="#" class="text-gray-400 hover:text-white text-sm transition-colors">FAQ</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    // Close mobile menu if open
+                    if (!mobileMenu.classList.contains('hidden')) {
+                        mobileMenu.classList.add('hidden');
+                    }
+                    
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Contact form handling
+        const contactForm = document.getElementById('contactForm');
+        const formSuccess = document.getElementById('formSuccess');
+        const formError = document.getElementById('formError');
+        
+        if (contactForm) {
+            contactForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Hide any previous messages
+                formSuccess.classList.add('hidden');
+                formError.classList.add('hidden');
+                
+                // Simulate form submission (in a real scenario, you'd use AJAX/Fetch)
+                setTimeout(() => {
+                    // For demo purposes, we'll always show success
+                    formSuccess.classList.remove('hidden');
+                    contactForm.reset();
+                    
+                    // Scroll to show the success message
+                    formSuccess.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                }, 1000);
+            });
+        }
+        
+        // Add animation to elements when they come into view
+        const animateOnScroll = () => {
+            const elements = document.querySelectorAll('.service-card, .testimonial-card');
+            
+            elements.forEach(element => {
+                const elementPosition = element.getBoundingClientRect().top;
+                const screenPosition = window.innerHeight / 1.2;
+                
+                if (elementPosition < screenPosition) {
+                    element.style.opacity = '1';
+                    element.style.transform = 'translateY(0)';
+                }
+            });
+        };
+        
+        // Set initial state for animated elements
+        document.querySelectorAll('.service-card, .testimonial-card').forEach(element => {
+            element.style.opacity = '0';
+            element.style.transform = 'translateY(20px)';
+            element.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        });
+        
+        // Run once on page load
+        animateOnScroll();
+        
+        // Then run on scroll
+        window.addEventListener('scroll', animateOnScroll);
+    </script>
+</body>
+</html>
